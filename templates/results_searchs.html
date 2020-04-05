@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+{% include 'barra_busqueda.html' %}
+
+{% block content %}
+<html>
+<head>
+	<title>
+		Results
+	</title>
+</head>
+<body>
+	<h1> Episodes</h1>
+
+
+	<table style="width:100%">
+		<thed>
+		  <tr>
+		    <th>Nombre</th>
+		    <th>Fecha</th>
+		    <th>Codigo</th>
+		  </tr>
+		</thed>
+	  
+	  	{% for episode in lista_total[0] %}
+		  <tr>
+		    <td><a href="{{ url_for('episode_route', argu =episode['id']) }}">{{episode["name"]}}</td>
+		    <td>{{episode["air_date"]}}</td>
+		    <td>{{episode["episode"]}}</td>
+	    {% endfor %}
+	  </tr>
+  
+</table>
+	<h1> Characters</h1>
+	{% for character in lista_total[2] %}
+ 		<li> <a href="{{ url_for('character_route', id =character['id']) }}">{{character["name"]}}</a>
+		
+	{% endfor %}
+
+	<h1> Locations</h1>
+	{% for location in lista_total[1] %}
+ 		<li> <a href="{{ url_for('location_route', id =location['id']) }}">{{location["name"]}}</a>
+		
+	{% endfor %}
+
+</body>
+</html>
+{% endblock %}

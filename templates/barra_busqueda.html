@@ -3,7 +3,8 @@
 <html>
 <body>
 <h3>Barra Búsqueda</h3>
-<form method="POST">
+
+<form method="POST" action="{{ url_for('search') }}">
     <input name="text">
     <input type="submit">
 </form>

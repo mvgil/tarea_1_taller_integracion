@@ -82,7 +82,7 @@ def episode_route(argu):
 
 	lista_info = [name, codigo, characters_dicc]
 
-    #lista_info = [name, codigo]
+	#lista_info = [name, codigo]
 	#dicc = info.json()
 	
 	return render_template('episode.html', episode_lista=lista_info)
@@ -140,7 +140,88 @@ def id_url_character(url):
 	if url == "":
 		return -1000
 	numero = int(lista_separada[len(lista_separada)- 1])
+
 	return numero
+
+
+@app.route('/search', methods=['POST'])
+def search():
+	## retorna una lista de listas, episodes, characters and locations
+	# Episodes
+	lista_total = []
+	arg_consulta = request.form['text']
+   
+	dicc_episodes = requests.get('https://rickandmortyapi.com/api/episode/?name='+arg_consulta).json()
+	if "info" in dicc_episodes:
+		numero_paginas_episodes= dicc_episodes["info"]["pages"]
+		lista_episodios = []
+		for episode_dic in dicc_episodes["results"]:
+			lista_episodios.append(episode_dic)
+		for i in range(numero_paginas_episodes - 1):
+			next_pagina = dicc_episodes["info"]["next"]
+			info_nueva_episodes = requests.get(next_pagina)
+			dicc_episodes = info_nueva_episodes.json()
+			for episode_dic in dicc_episodes["results"]:
+				lista_episodios.append(episode_dic)
+		lista_total.append(lista_episodios)
+		#lista_completa_episodes.append(dicc)
+		#lista_total.append(lista_episodios)
+		#lista_total.append(lista_episodios)
+	else:
+		lista_total.append([])
+
+
+
+
+	## Locations
+	dicc_locations = requests.get('https://rickandmortyapi.com/api/location/?name='+arg_consulta).json()
+	if "info" in dicc_locations:
+		numero_paginas_locations= dicc_locations["info"]["pages"]
+		lista_locations = []
+		for location_dic in dicc_locations["results"]:
+			lista_locations.append(location_dic)
+		for i in range(numero_paginas_locations - 1):
+			next_pagina = dicc_locations["info"]["next"]
+			info_nueva_locations = requests.get(next_pagina)
+			dicc_locations = info_nueva_locations.json()
+			for locations_dic in dicc_locations["results"]:
+				lista_locations.append(locations_dic)
+		lista_total.append(lista_locations)
+	else:
+		lista_total.append([])
+
+
+
+
+	## Characters
+	dicc_characters = requests.get('https://rickandmortyapi.com/api/character/?name='+arg_consulta).json()
+	if "info" in dicc_characters:
+		numero_paginas_characters= dicc_characters["info"] ["pages"]
+		lista_characters = []
+		for character_dic in dicc_characters["results"]:
+			lista_characters.append(character_dic)
+		for i in range(numero_paginas_characters - 1):
+			next_pagina = dicc_characters["info"]["next"]
+			info_nueva_characters = requests.get(next_pagina)
+			dicc_characters = info_nueva_characters.json()
+			for characters_dic in dicc_characters["results"]:
+				lista_characters.append(characters_dic)
+		lista_total.append(lista_characters)
+
+	else:
+		lista_total.append([])
+		
+	
+
+		
+
+
+ 
+	return render_template('results_searchs.html', lista_total=lista_total)
+
+
+
+
 
 
 if __name__ == "__main__":
