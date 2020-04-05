@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Episode
+	</title>
+</head>
+<body>
+     <img src={{info_total[6]}} alt="Italian Trulli">
+	<h1> Name Character: {{info_total[0]}} Status: {{info_total[1]}}  Type: {{info_total[2]}}Gender: {{info_total[3]}} Origin: {{info_total[4]}} Location: {{info_total[5]}} <a href="{{ url_for('location_route', id =info_total[8]) }}">{{info_total[5]}}</a></h1>
+	<h2> Name Episodes </h2>
+ 	{% for episode in info_total[7] %}
+		<li> <a href="{{ url_for('episode_route', argu =episode['id']) }}">{{episode["name"]}}</a>
+	{% endfor %}
+
+
+
+
+</body>
+</html>

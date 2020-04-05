@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Episode
+	</title>
+</head>
+<body>
+	<h1> Name Location: {{info_total[0]}} Type: {{info_total[1]}}  Dimension: {{info_total[2]}}</h1>
+	<h2> Residents </h2>
+ 	{% for character in info_total[3] %}
+ 		<li> <a href="{{ url_for('character_route', id =character['id']) }}">{{character["name"]}}</a>
+		
+	{% endfor %}
+
+
+
+
+</body>
+</html>

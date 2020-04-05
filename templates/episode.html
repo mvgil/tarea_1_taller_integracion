@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Episode
+	</title>
+</head>
+<body>
+	<h1> Episode: {{episode_lista[1]}} Name: {{episode_lista[0]}}</h1>
+	<h2> Characters </h2>
+ 	{% for character in episode_lista[2] %}
+		<li> <a href="{{ url_for('character_route', id =character['id']) }}">{{character["name"]}}</a>
+	{% endfor %}
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% include 'barra_busqueda.html' %}
+
+{% block content %}
+<html>
+<head>
+	<title>
+		Episodes
+	</title>
+</head>
+<body>
+	<h1> Episodes</h1>
+
+
+	<table style="width:100%">
+		<thed>
+		  <tr>
+		    <th>Nombre</th>
+		    <th>Fecha</th>
+		    <th>Codigo</th>
+		  </tr>
+		</thed>
+	  
+	  	{% for episode in episodes %}
+	  <tr>
+	    <td><a href="{{ url_for('episode_route', argu =episode['id']) }}">{{episode["name"]}}</td>
+	    <td>{{episode["air_date"]}}</td>
+	    <td>{{episode["episode"]}}</td>
+	    {% endfor %}
+	  </tr>
+  
+</table>
+</body>
+</html>
+{% endblock %}

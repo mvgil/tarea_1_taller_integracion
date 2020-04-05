@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Episodes
+	</title>
+</head>
+{% include 'form_input.html' %}
+<body>
+	{% for episode in episodes %}
+		<a href="{{ url_for('episode', argu =episode) }}">Check out this cool form {{episode}}!</a>
+		
+	{% endfor %}
+</body>
+</html>
