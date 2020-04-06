@@ -3,18 +3,21 @@ from decouple import config as config_decouple
 import requests
 
 
+
+
+
 app = Flask(__name__)
 #from decouple import config
 
 
-
+url_nueva_api = 'https://integracion-rick-morty-api.herokuapp.com/api/'
 
 
 
 
 @app.route('/prueba')
 def index():
-	info = requests.get('https://rickandmortyapi.com/api/episode/')
+	info = requests.get( url_nueva_api + 'episode/')
 	dicc = info.json()
 	numero_paginas = dicc["info"]["pages"]
 	lista_completa = [dicc]
