@@ -40,7 +40,7 @@ def index():
 
 @app.route('/')
 def episodes():
-	info = requests.get('https://rickandmortyapi.com/api/episode/')
+	info = requests.get(url_nueva_api + 'episode/')
 	dicc = info.json()
 	numero_paginas = dicc["info"]["pages"]
 	lista_completa = [dicc]
@@ -66,7 +66,7 @@ def episodes_busqueda():
 
 @app.route('/episode/<string:argu>', methods=['GET', 'POST'])
 def episode_route(argu):
-	info = requests.get('https://rickandmortyapi.com/api/episode/'+ argu)
+	info = requests.get( url_nueva_api + 'episode/'+ argu)
 	dicc = info.json()
 	characters = dicc["characters"]
 	name = dicc["name"]
@@ -81,7 +81,7 @@ def episode_route(argu):
 	for character_url in characters:
 		lista_id_characters.append(id_url_character(character_url))
 	print(f"la lista es {lista_id_characters}")
-	characters_dicc = requests.get('https://rickandmortyapi.com/api/character/'+ str(lista_id_characters)).json()
+	characters_dicc = requests.get(url_nueva_api + '/character/'+ str(lista_id_characters)).json()
 
 	lista_info = [name, codigo, characters_dicc]
 
@@ -93,7 +93,7 @@ def episode_route(argu):
 
 @app.route('/character/<string:id>', methods=['GET', 'POST'])
 def character_route(id):
-	info = requests.get('https://rickandmortyapi.com/api/character/'+ id)
+	info = requests.get( url_nueva_api + 'character/'+ id)
 	dicc = info.json()
 	name_character = dicc["name"]
 	status_character = dicc["status"]
@@ -109,7 +109,7 @@ def character_route(id):
 	for url in lista_url_episodios:
 		num = id_url_character(url)
 		lista_id_episodios.append(num)
-	episodes_objects = requests.get('https://rickandmortyapi.com/api/episode/'+ str(lista_id_episodios)).json()
+	episodes_objects = requests.get(url_nueva_api + 'episode/'+ str(lista_id_episodios)).json()
 	lista_info_total = [name_character, status_character, tipo_character, 
 	gender_character, origin, location_name, img, episodes_objects, location_num]
 	return render_template('character.html', info_total=lista_info_total)
@@ -120,7 +120,7 @@ def character_route(id):
 @app.route('/location/<string:id>', methods=['GET', 'POST'])
 def location_route(id):
 	print(f"en location rout recibimos {id}")
-	info = requests.get('https://rickandmortyapi.com/api/location/'+ id)
+	info = requests.get(url_nueva_api + 'location/'+ id)
 	dicc = info.json()
 	if int(id) != -1000:
 		name = dicc["name"]
@@ -130,7 +130,7 @@ def location_route(id):
 		residents_id = []
 		for url in residents_url:
 			residents_id.append(id_url_character(url))
-		objects_residents = requests.get('https://rickandmortyapi.com/api/character/'+ str(residents_id)).json()
+		objects_residents = requests.get(url_nueva_api + 'character/'+ str(residents_id)).json()
 		lista_info_total = [name, type_, dimension, objects_residents]
 		return render_template('location.html', info_total=lista_info_total)
 	else: 
@@ -154,7 +154,7 @@ def search():
 	lista_total = []
 	arg_consulta = request.form['text']
    
-	dicc_episodes = requests.get('https://rickandmortyapi.com/api/episode/?name='+arg_consulta).json()
+	dicc_episodes = requests.get(url_nueva_api + 'episode/?name='+arg_consulta).json()
 	if "info" in dicc_episodes:
 		numero_paginas_episodes= dicc_episodes["info"]["pages"]
 		lista_episodios = []
@@ -177,7 +177,7 @@ def search():
 
 
 	## Locations
-	dicc_locations = requests.get('https://rickandmortyapi.com/api/location/?name='+arg_consulta).json()
+	dicc_locations = requests.get(url_nueva_api + 'location/?name='+arg_consulta).json()
 	if "info" in dicc_locations:
 		numero_paginas_locations= dicc_locations["info"]["pages"]
 		lista_locations = []
@@ -197,7 +197,7 @@ def search():
 
 
 	## Characters
-	dicc_characters = requests.get('https://rickandmortyapi.com/api/character/?name='+arg_consulta).json()
+	dicc_characters = requests.get( url_nueva_api + 'character/?name='+arg_consulta).json()
 	if "info" in dicc_characters:
 		numero_paginas_characters= dicc_characters["info"] ["pages"]
 		lista_characters = []
